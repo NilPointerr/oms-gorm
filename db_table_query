@@ -1,0 +1,51 @@
+// User represents a user in the OMS system
+type User struct {
+	ID        int            `json:"id"`
+	Name      string         `json:"name"`
+	Email     string         `json:"email"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
+	Orders    []Order        `json:"orders" gorm:"many2many:user_orders"` // Many-to-Many with Orders
+}
+
+// Order represents an order in the OMS system
+type Order struct {
+	ID         int            `json:"id"`
+	TotalPrice float64        `json:"total_price"`
+	Status     string         `json:"status"`
+	FinalPrice float64        `json:"final_price"` // Total price after applying discounts
+	CreatedAt  time.Time      `json:"created_at"`
+	UpdatedAt  time.Time      `json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `json:"deleted_at" gorm:"index"`
+	Users      []User         `json:"users" gorm:"many2many:user_orders"` // Many-to-Many with Users
+	Items      []Item         `json:"items" gorm:"many2many:order_items"` // Many-to-Many with Items
+}
+
+// Item represents an item in the OMS system
+type Item struct {
+	ID          int            `json:"id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Price       float64        `json:"price"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `json:"deleted_at" gorm:"index"`
+	Orders      []Order        `json:"orders" gorm:"many2many:order_items"` // Many-to-Many with Orders
+}
+
+// UserOrder represents the join table for User and Order (Many-to-Many)
+type UserOrder struct {
+	UserID  int       `json:"user_id" gorm:"primaryKey"`
+	OrderID int       `json:"order_id" gorm:"primaryKey"`
+	CreatedAt time.Time `json:"created_at"` // Optional: Track when the relation was created
+}
+
+// OrderItem represents the join table for Order and Item (Many-to-Many)
+type OrderItem struct {
+	OrderID   int       `json:"order_id" gorm:"primaryKey"`
+	ItemID    int       `json:"item_id" gorm:"primaryKey"`
+	Quantity  int       `json:"quantity"` // Quantity of the item in the order
+	Price     float64   `json:"price"`    // Price per unit of the item in the order
+	CreatedAt time.Time `json:"created_at"` // Optional: Track when the relation was created
+}

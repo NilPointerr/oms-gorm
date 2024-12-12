@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "fea6ed92-3c51-4092-9499-a7274e6eb566",
+		"name": "OMS-GoLang",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28678570"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"harsh\",\n  \"email\": \"harsh7878@gmail.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/createUser"
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserDetailByUserId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/GetUserDetailByUserId/2"
+					},
+					"response": []
+				},
+				{
+					"name": "getUserDetailsWithOrders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/user/getUserDetailsWithOrders/1"
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/FetchAllUser"
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/user/1"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserByUserId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/DeleteUserByUserId/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ITEMS",
+			"item": [
+				{
+					"name": "Add Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Cotton shirt\",\n    \"description\":\"white shirt without any stiches\",\n    \"price\":1299\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/item"
+					},
+					"response": []
+				},
+				{
+					"name": "get Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/items"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/DeleteItemByItemId/1"
+					},
+					"response": []
+				},
+				{
+					"name": "GetItemByItemId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/GetItemByItemId/1"
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateItemByItemId",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\" Cpper Bottle\",\n    \"description\":\"durable and immunity buster for your better health\",\n    \"price\":2199\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/UpdateItemByItemId/5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ORDERS",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": 1,\n  \"status\": \"Pending\",\n  \"items\": [\n    {\n      \"item_id\": 1,\n      \"quantity\": 3\n    },\n    {\n      \"item_id\": 2,\n      \"quantity\": 2\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/order"
+					},
+					"response": []
+				},
+				{
+					"name": "getOrderById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOrderById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/deleteOrderByOderId//8"
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": 1,\n  \"status\": \"Pending\",\n  \"items\": [\n    {\n      \"item_id\": 3,\n      \"quantity\": 3\n    },\n    {\n      \"item_id\": 2,\n      \"quantity\": 2\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/updateOrderByOrderId/2"
+					},
+					"response": []
+				},
+				{
+					"name": "update Status",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/getOrders"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

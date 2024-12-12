@@ -1,0 +1,6 @@
+env: "development"
+storage_path: "storage/OMSDatabase.db"
+http_server:
+  address: "localhost:8080"
+
+

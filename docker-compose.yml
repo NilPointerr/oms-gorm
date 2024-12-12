@@ -1,0 +1,124 @@
+version: '3.8'
+
+services:
+  oms-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: oms-api-gorm
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+    environment:
+      - DB_HOST=postgres-container-35
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=oms
+    depends_on:
+      postgres-service:
+          condition: service_started
+    command: ["sh", "-c", "/wait-for-it.sh postgres-container-35:5432 --timeout=60 -- echo 'Postgres is up!' && ./main"] # Add your actual application start command here
+
+
+
+  # PostgreSQL Database Service
+  postgres-service:
+    image: postgres:latest
+    container_name: postgres-container-35
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=oms
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "oms", "-h", "postgres-container-33", "-p", "5432"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+# Networks and volumes
+networks:
+  my-network:
+    # driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+
+
+
+# version: '3.8'
+# services:
+#   postgres-container:
+#     image: postgres:latest
+#     environment:
+#       POSTGRES_USER: root
+#       POSTGRES_PASSWORD: root
+#       POSTGRES_DB: oms
+#     ports:
+#       - "5432:5432"
+#     networks:
+#       - oms-network
+
+#   oms-api-container:
+#     build:
+#       context: .
+#     # image: oms-api:latest
+#     environment:
+#       DB_HOST: postgres-container
+#       DB_PORT: 5432
+#       DB_USER: root
+#       DB_PASSWORD: root
+#       DB_NAME: oms
+#     depends_on:
+#       - postgres-container
+#     command: ["sh", "-c", "/wait-for-it.sh postgres-container:5432 --timeout=60 -- echo 'Postgres is up!' && ./main --db_host=postgres-container"]
+#     # command: ["sh", "-c", "tail -f /dev/null"]
+#     networks:
+#       - oms-network
+
+# networks:
+#   oms-network:
+#     driver: bridge
+
+
+# version: "3.8"
+# services:
+#   oms-api:
+#     image: oms-api:latest  
+#     environment:
+#       - DATABASE_HOST=postgres-container-100
+#       - DATABASE_PORT=5432
+#       - DATABASE_NAME=oms
+#       - DATABASE_USER=root
+#       - DATABASE_PASSWORD=root
+#     depends_on:
+#       - db
+#     networks:
+#       - oms-network
+#     ports:
+#       - "8080:8080"
+#     command: ["sh", "-c", "/wait-for-it.sh db:5432 --timeout=30 -- echo 'Postgres is up!' && ./main --db_host=postgres-container-100 --db_port=5432 --db_user=root --db_password=root --db_name=oms"]
+
+#   db:
+#     image: postgres:17
+#     container_name: postgres-container-100
+#     environment:
+#       POSTGRES_DB: oms
+#       POSTGRES_USER: root
+#       POSTGRES_PASSWORD: root
+#     networks:
+#       - oms-network
+#     ports:
+#       - "5432:5432"
+
+# networks:
+#   oms-network:
+#     driver: bridge
